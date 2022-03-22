@@ -19,6 +19,10 @@ except:
     long_description = None
 
 
+# Read in requirements.txt
+requirements = open('requirements.txt').readlines()
+requirements = [r.strip() for r in requirements]
+
 setup(
     # Self-descriptive entries which should always be present
     name='montecarlo',
@@ -29,6 +33,7 @@ setup(
     long_description_content_type="text/markdown",
     version=versioneer.get_version(),
     cmdclass=versioneer.get_cmdclass(),
+    license='MIT',
 
     # Which Python importable modules should be included when your package is installed
     # Handled automatically by setuptools. Use 'exclude' to prevent some specific
@@ -45,7 +50,7 @@ setup(
 
     # Additional entries you may want simply uncomment the lines you want and fill in the data
     # url='http://www.my_package.com',  # Website
-    # install_requires=[],              # Required packages, pulls from pip if needed; do not use for Conda deployment
+    install_requires=requirements,              # Required packages, pulls from pip if needed; do not use for Conda deployment
     # platforms=['Linux',
     #            'Mac OS-X',
     #            'Unix',
