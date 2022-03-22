@@ -1,7 +1,7 @@
 montecarlo
 ==============================
 [//]: # (Badges)
-[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://bhima.github.io/montecarlo/)
+[![Stable](https://img.shields.io/badge/docs-stable-blue.svg)](https://bhvima.github.io/montecarlo/)
 [![GitHub Actions Build Status](https://github.com/bhvima/montecarlo/workflows/CI/badge.svg)](https://github.com/bhvima/montecarlo/actions?query=workflow%3ACI)
 [![codecov](https://codecov.io/gh/bhvima/montecarlo/branch/master/graph/badge.svg)](https://codecov.io/gh/bhvima/montecarlo/branch/master)
 
