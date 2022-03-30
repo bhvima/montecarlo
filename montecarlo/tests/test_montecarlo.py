@@ -14,7 +14,7 @@ def test_montecarlo_imported():
 @pytest.fixture
 def hamiltonian():
     """Returns an Ising Hamiltonian with k=1, J=-2 and mu=1.1"""
-    return IsingHamiltonian1D(k=-1, J=-2, mu=1.1)
+    return IsingHamiltonian(k=-1, J=-2, mu=1.1)
 
 @pytest.fixture
 def spin_config_sm():
@@ -50,8 +50,8 @@ def test_SpinConfig(spin_config, spin_config_without_pbc):
     assert len(spin_config_without_pbc) == 5
     assert spin_config.magnetization() == -1
 
-def test_IsingHamiltonian1D(hamiltonian, spin_config_sm, spin_config_without_pbc_sm):
-    """Tests the IsingHamiltonian1D class"""
+def test_IsingHamiltonian(hamiltonian, spin_config_sm, spin_config_without_pbc_sm):
+    """Tests the IsingHamiltonian class"""
     assert hamiltonian.energy(spin_config_sm) == 4.0
     assert hamiltonian.energy(spin_config_without_pbc_sm) == 2.0
 

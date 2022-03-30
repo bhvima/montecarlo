@@ -1,8 +1,8 @@
 import numpy as np
 from .spin_config import SpinConfig
 
-class IsingHamiltonian1D:
-    """Class for 1D Hamiltonian
+class IsingHamiltonian:
+    """Class for Ising Hamiltonian
 
         .. math::
             H = -J\\sum_{\\left<ij\\right>} \\sigma_i\\sigma_j + \\mu\\sum_i\\sigma_i
