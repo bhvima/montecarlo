@@ -73,8 +73,11 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    - name: Sphinx Build
-      uses: ammaraskar/sphinx-action@0.4
+    steps:
+    - uses: actions/checkout@v1
+    - uses: ammaraskar/sphinx-action@master
+      with:
+        docs-folder: "docs/"
 
     - name: Commit documentation changes
       run: |
