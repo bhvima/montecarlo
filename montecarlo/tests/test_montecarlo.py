@@ -13,7 +13,7 @@ def test_montecarlo_imported():
 
 @pytest.fixture
 def hamiltonian():
-    """Returns an Ising Hamiltonian with k=1, J=-2 and mu=1.1"""
+    """Returns an Ising Hamiltonian with k=-1, J=-2 and mu=1.1"""
     return IsingHamiltonian(k=-1, J=-2, mu=1.1)
 
 @pytest.fixture
