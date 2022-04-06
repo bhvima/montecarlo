@@ -69,6 +69,7 @@ class IsingHamiltonian:
             p = self.__probability(s, T)
             num += (self.energy(s) ** power) * p
             denum += p
+        print(denum)
         return num/denum
 
     def compute_average_magnetization(self, conf, T, power=1):
