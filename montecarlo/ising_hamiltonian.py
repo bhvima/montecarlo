@@ -1,4 +1,5 @@
 import numpy as np
+from math import comb
 from .spin_config import SpinConfig
 
 class IsingHamiltonian:
@@ -69,7 +70,43 @@ class IsingHamiltonian:
             p = self.__probability(s, T)
             num += (self.energy(s) ** power) * p
             denum += p
-        print(denum)
+        return num/denum
+
+    def compute_average_energy_fast(self, nsites, T):
+        num = denum = 0
+
+        n = 0
+        for sec_sum in range(nsites, -1, -2):
+            first_sum = nsites - 4
+            if n == 0:
+                energy_neg = (-self.J * nsites + self.mu * sec_sum)/self.k
+                energy_pos = (-self.J * nsites - self.mu * sec_sum)/self.k
+                p_pos = np.exp((-1/T) * energy_pos)
+                p_neg = np.exp((-1/T) * energy_neg)
+                num += energy_pos * p_pos + energy_neg * p_neg
+                denum += p_pos + p_neg
+            elif n == 1:
+                energy_pos = (-self.J * first_sum + self.mu * sec_sum)/self.k
+                energy_neg = (-self.J * first_sum - self.mu * sec_sum)/self.k
+                p_pos = nsites * np.exp((-1/T) * energy_pos)
+                p_neg = nsites * np.exp((-1/T) * energy_neg)
+                num += energy_pos * p_pos + energy_neg * p_neg
+                denum += p_pos + p_neg
+            else:
+                num_of_zrs = nsites - n
+                for m in range(1, n + 1):
+                    freq = int((comb(num_of_zrs - 1, m - 1) * comb(n - 1, m - 1) * nsites)/m)
+                    energy_pos = (-self.J * first_sum + self.mu * sec_sum)/self.k
+                    p_pos = freq * np.exp((-1/T) * energy_pos)
+                    num += energy_pos * p_pos
+                    denum += p_pos
+                    if n != nsites//2 or nsites % 2 != 0:
+                        energy_neg = (-self.J * first_sum - self.mu * sec_sum)/self.k
+                        p_neg = freq * np.exp((-1/T) * energy_neg)
+                        num += energy_neg * p_neg
+                        denum += p_neg
+                    first_sum -= 4
+            n += 1
         return num/denum
 
     def compute_average_magnetization(self, conf, T, power=1):
