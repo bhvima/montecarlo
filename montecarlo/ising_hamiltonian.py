@@ -72,40 +72,39 @@ class IsingHamiltonian:
             denum += p
         return num/denum
 
-    def compute_average_energy_fast(self, nsites, T):
+    def compute_average_energy_fast(self, nsites, T, power=1):
         num = denum = 0
 
         n = 0
-        for sec_sum in range(nsites, -1, -2):
-            first_sum = nsites - 4
+        for config_sum in range(nsites, -1, -2):
+            bond_sum = nsites - 4
             if n == 0:
-                energy_neg = (-self.J * nsites + self.mu * sec_sum)/self.k
-                energy_pos = (-self.J * nsites - self.mu * sec_sum)/self.k
+                energy_neg = (-self.J * nsites - self.mu * config_sum)/self.k
+                energy_pos = (-self.J * nsites + self.mu * config_sum)/self.k
                 p_pos = np.exp((-1/T) * energy_pos)
                 p_neg = np.exp((-1/T) * energy_neg)
-                num += energy_pos * p_pos + energy_neg * p_neg
+                num += (energy_pos ** power) * p_pos + (energy_neg ** power) * p_neg
                 denum += p_pos + p_neg
             elif n == 1:
-                energy_pos = (-self.J * first_sum + self.mu * sec_sum)/self.k
-                energy_neg = (-self.J * first_sum - self.mu * sec_sum)/self.k
+                energy_pos = (-self.J * bond_sum + self.mu * config_sum)/self.k
+                energy_neg = (-self.J * bond_sum - self.mu * config_sum)/self.k
                 p_pos = nsites * np.exp((-1/T) * energy_pos)
                 p_neg = nsites * np.exp((-1/T) * energy_neg)
-                num += energy_pos * p_pos + energy_neg * p_neg
+                num += (energy_pos ** power) * p_pos + (energy_neg ** power) * p_neg
                 denum += p_pos + p_neg
             else:
-                num_of_zrs = nsites - n
-                for m in range(1, n + 1):
-                    freq = int((comb(num_of_zrs - 1, m - 1) * comb(n - 1, m - 1) * nsites)/m)
-                    energy_pos = (-self.J * first_sum + self.mu * sec_sum)/self.k
+                for i in range(1, n + 1):
+                    freq = (comb(nsites - n - 1, i - 1) * comb(n - 1, i - 1) * nsites)//i
+                    energy_pos = (-self.J * bond_sum + self.mu * config_sum)/self.k
                     p_pos = freq * np.exp((-1/T) * energy_pos)
-                    num += energy_pos * p_pos
+                    num += (energy_pos ** power) * p_pos
                     denum += p_pos
                     if n != nsites//2 or nsites % 2 != 0:
-                        energy_neg = (-self.J * first_sum - self.mu * sec_sum)/self.k
+                        energy_neg = (-self.J * bond_sum - self.mu * config_sum)/self.k
                         p_neg = freq * np.exp((-1/T) * energy_neg)
-                        num += energy_neg * p_neg
+                        num += (energy_neg ** power) * p_neg
                         denum += p_neg
-                    first_sum -= 4
+                    bond_sum -= 4
             n += 1
         return num/denum
 
@@ -132,6 +131,42 @@ class IsingHamiltonian:
             denum += p
         return num/denum
 
+    def compute_average_magnetization_fast(self, nsites, T, power=1):
+        num = denum = 0
+
+        n = 0
+        for config_sum in range(nsites, -1, -2):
+            bond_sum = nsites - 4
+            if n == 0:
+                energy_neg = (-self.J * nsites - self.mu * config_sum)/self.k
+                energy_pos = (-self.J * nsites + self.mu * config_sum)/self.k
+                p_pos = np.exp((-1/T) * energy_pos)
+                p_neg = np.exp((-1/T) * energy_neg)
+                num += (config_sum ** power) * p_pos + (-config_sum ** power) * p_neg
+                denum += p_pos + p_neg
+            elif n == 1:
+                energy_pos = (-self.J * bond_sum + self.mu * config_sum)/self.k
+                energy_neg = (-self.J * bond_sum - self.mu * config_sum)/self.k
+                p_pos = nsites * np.exp((-1/T) * energy_pos)
+                p_neg = nsites * np.exp((-1/T) * energy_neg)
+                num += (config_sum ** power) * p_pos + (-config_sum ** power) * p_neg
+                denum += p_pos + p_neg
+            else:
+                for i in range(1, n + 1):
+                    freq = (comb(nsites - n - 1, i - 1) * comb(n - 1, i - 1) * nsites)//i
+                    energy_pos = (-self.J * bond_sum + self.mu * config_sum)/self.k
+                    p_pos = freq * np.exp((-1/T) * energy_pos)
+                    num += (config_sum ** power) * p_pos
+                    denum += p_pos
+                    if n != nsites//2 or nsites % 2 != 0:
+                        energy_neg = (-self.J * bond_sum - self.mu * config_sum)/self.k
+                        p_neg = freq * np.exp((-1/T) * energy_neg)
+                        num += (-config_sum ** power) * p_neg
+                        denum += p_neg
+                    bond_sum -= 4
+            n += 1
+        return num/denum
+
     def compute_heat_capacity(self, conf, T):
         """ Compute Heat Capacity exactly
 
@@ -149,6 +184,9 @@ class IsingHamiltonian:
         """
         return (self.compute_average_energy(conf, T, power=2) - (self.compute_average_energy(conf, T) ** 2)) / (T ** 2)
 
+    def compute_heat_capacity_fast(self, nsites, T):
+        return (self.compute_average_energy_fast(nsites, T, power=2) - (self.compute_average_energy_fast(nsites, T) ** 2)) / (T ** 2)
+
     def compute_magnetic_susceptibility(self, conf, T):
         """ Compute Magnetic Susceptibility exactly
 
@@ -165,3 +203,6 @@ class IsingHamiltonian:
             Magnetic Susceptability
         """
         return (self.compute_average_magnetization(conf, T, power=2) - (self.compute_average_magnetization(conf, T) ** 2)) / T
+
+    def compute_magnetic_susceptibility_fast(self, nsites, T):
+        return (self.compute_average_magnetization_fast(nsites, T, power=2) - (self.compute_average_magnetization_fast(nsites, T) ** 2)) / T
