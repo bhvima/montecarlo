@@ -41,6 +41,7 @@
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Getting Started</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#basic-installation">Basic Installation</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#plot-of-observables-vs-t">Plot of observables vs T</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="api.html">Class Overview</a></li>
@@ -85,13 +86,40 @@
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <p>Compute the energy of a given spin configuration:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">montecarlo</span> <span class="kn">import</span> <span class="n">IsingHamiltonian</span> <span class="k">as</span> <span class="n">hamiltonian</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">montecarlo</span> <span class="kn">import</span> <span class="n">IsingHamiltonian</span> <span class="k">as</span> <span class="n">Hamiltonian</span>
 <span class="kn">from</span> <span class="nn">montecarlo</span> <span class="kn">import</span> <span class="n">SpinConfig</span>
 
-<span class="n">H</span> <span class="o">=</span> <span class="n">hamiltonian</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">J</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
+<span class="n">H</span> <span class="o">=</span> <span class="n">Hamiltonian</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">J</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
 <span class="n">H</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="n">SpinConfig</span><span class="p">(</span><span class="s2">&quot;++-+---+--+&quot;</span><span class="p">))</span>
 </pre></div>
 </div>
+</div>
+<div class="section" id="plot-of-observables-vs-t">
+<h2>Plot of observables vs T<a class="headerlink" href="#plot-of-observables-vs-t" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">montecarlo</span> <span class="kn">import</span> <span class="n">IsingHamiltonian</span> <span class="k">as</span> <span class="n">Hamiltonian</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">H</span> <span class="o">=</span> <span class="n">Hamiltonian</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">J</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="p">,</span><span class="mi">10</span><span class="p">,</span><span class="mi">100</span><span class="p">)</span>
+
+<span class="n">AE</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">compute_average_energy_fast</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+<span class="n">AM</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">compute_average_magnetization_fast</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+<span class="n">HC</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">compute_heat_capacity_fast</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+<span class="n">MS</span> <span class="o">=</span> <span class="n">H</span><span class="o">.</span><span class="n">compute_magnetic_susceptibility_fast</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">AE</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Average Energy&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">AM</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Average Magnetization&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">HC</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Heat Capacity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">MS</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Magnetic Susceptibility&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This should produce the following plot:</p>
+<a class="reference internal image-reference" href="_images/plot1.png"><img alt="Observables vs Temperature (30 sites)" src="_images/plot1.png" style="width: 400px;" /></a>
 </div>
 </div>
 
