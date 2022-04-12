@@ -73,6 +73,20 @@ class IsingHamiltonian:
         return num/denum
 
     def compute_average_energy_fast(self, nsites, T, power=1):
+        """ Compute Average Energy exactly (fast) (pbc)
+
+        Parameters
+        ----------
+        nsites   : int
+            number of sites
+        T      : int
+            Temperature
+        
+        Returns
+        -------
+        E  : float 
+            Energy
+        """
         num = denum = 0
 
         n = 0
@@ -88,8 +102,8 @@ class IsingHamiltonian:
             elif n == 1:
                 energy_pos = (-self.J * bond_sum + self.mu * config_sum)/self.k
                 energy_neg = (-self.J * bond_sum - self.mu * config_sum)/self.k
-                p_pos = nsites * np.exp((-1/T) * energy_pos)
-                p_neg = nsites * np.exp((-1/T) * energy_neg)
+                p_pos = (1 if nsites == 2 else nsites) * np.exp((-1/T) * energy_pos)
+                p_neg = (1 if nsites == 2 else nsites) * np.exp((-1/T) * energy_neg)
                 num += (energy_pos ** power) * p_pos + (energy_neg ** power) * p_neg
                 denum += p_pos + p_neg
             else:
@@ -132,6 +146,20 @@ class IsingHamiltonian:
         return num/denum
 
     def compute_average_magnetization_fast(self, nsites, T, power=1):
+        """ Compute Average Magnetization exactly (fast) (pbc)
+
+        Parameters
+        ----------
+        nsites   : int
+            number of sites
+        T      : int
+            Temperature
+        
+        Returns
+        -------
+        M  : float
+            Magnetization
+        """
         num = denum = 0
 
         n = 0
@@ -142,14 +170,14 @@ class IsingHamiltonian:
                 energy_pos = (-self.J * nsites + self.mu * config_sum)/self.k
                 p_pos = np.exp((-1/T) * energy_pos)
                 p_neg = np.exp((-1/T) * energy_neg)
-                num += (config_sum ** power) * p_pos + (-config_sum ** power) * p_neg
+                num += (config_sum ** power) * p_pos + ((-config_sum) ** power) * p_neg
                 denum += p_pos + p_neg
             elif n == 1:
                 energy_pos = (-self.J * bond_sum + self.mu * config_sum)/self.k
                 energy_neg = (-self.J * bond_sum - self.mu * config_sum)/self.k
-                p_pos = nsites * np.exp((-1/T) * energy_pos)
-                p_neg = nsites * np.exp((-1/T) * energy_neg)
-                num += (config_sum ** power) * p_pos + (-config_sum ** power) * p_neg
+                p_pos = (1 if nsites == 2 else nsites) * np.exp((-1/T) * energy_pos)
+                p_neg = (1 if nsites == 2 else nsites) * np.exp((-1/T) * energy_neg)
+                num += (config_sum ** power) * p_pos + ((-config_sum) ** power) * p_neg
                 denum += p_pos + p_neg
             else:
                 for i in range(1, n + 1):
@@ -161,7 +189,7 @@ class IsingHamiltonian:
                     if n != nsites//2 or nsites % 2 != 0:
                         energy_neg = (-self.J * bond_sum - self.mu * config_sum)/self.k
                         p_neg = freq * np.exp((-1/T) * energy_neg)
-                        num += (-config_sum ** power) * p_neg
+                        num += ((-config_sum) ** power) * p_neg
                         denum += p_neg
                     bond_sum -= 4
             n += 1
@@ -185,6 +213,20 @@ class IsingHamiltonian:
         return (self.compute_average_energy(conf, T, power=2) - (self.compute_average_energy(conf, T) ** 2)) / (T ** 2)
 
     def compute_heat_capacity_fast(self, nsites, T):
+        """ Compute Heat Capacity exactly (fast) (pbc)
+
+        Parameters
+        ----------
+        nsites   : int
+            number of sites
+        T      : int
+            Temperature
+        
+        Returns
+        -------
+        HC : float
+            Heat Capacity
+        """
         return (self.compute_average_energy_fast(nsites, T, power=2) - (self.compute_average_energy_fast(nsites, T) ** 2)) / (T ** 2)
 
     def compute_magnetic_susceptibility(self, conf, T):
@@ -205,4 +247,18 @@ class IsingHamiltonian:
         return (self.compute_average_magnetization(conf, T, power=2) - (self.compute_average_magnetization(conf, T) ** 2)) / T
 
     def compute_magnetic_susceptibility_fast(self, nsites, T):
+        """ Compute Magnetic Susceptibility exactly (fast) (pbc)
+
+        Parameters
+        ----------
+        nsites   : int
+            number of sites
+        T      : int
+            Temperature
+        
+        Returns
+        -------
+        MS : float
+            Magnetic Susceptability
+        """
         return (self.compute_average_magnetization_fast(nsites, T, power=2) - (self.compute_average_magnetization_fast(nsites, T) ** 2)) / T

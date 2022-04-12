@@ -60,6 +60,21 @@ def test_IsingHamiltonian(hamiltonian, spin_config_sm, spin_config_without_pbc_s
     assert hamiltonian.compute_heat_capacity(spin_config_sm, 1) == 0.23950137558927764
     assert hamiltonian.compute_magnetic_susceptibility(spin_config_sm, 1) == 0.19196693603718007
 
+    assert hamiltonian.compute_average_energy_fast(2, 1) == -6.145889782051416
+    assert hamiltonian.compute_average_magnetization_fast(2, 1) == 1.9513429553841268
+    assert hamiltonian.compute_heat_capacity_fast(2, 1) == 0.23950137558929185
+    assert hamiltonian.compute_magnetic_susceptibility_fast(2, 1) == 0.19196693603718007
+
+    assert hamiltonian.compute_average_energy_fast(10, 1) == -30.99562217946881
+    assert hamiltonian.compute_average_magnetization_fast(10, 1) == 9.999059904921909
+    assert hamiltonian.compute_heat_capacity_fast(10, 1) == 0.046131068738759495
+    assert hamiltonian.compute_magnetic_susceptibility_fast(10, 1) == 0.0023485385990227314
+
+    assert hamiltonian.compute_average_energy_fast(11, 1) == -34.095184403383776
+    assert hamiltonian.compute_average_magnetization_fast(11, 1) == 10.998965900847892
+    assert hamiltonian.compute_heat_capacity_fast(11, 1) == 0.05074404624292583
+    assert hamiltonian.compute_magnetic_susceptibility_fast(11, 1) == 0.0025832851479918872
+
     assert hamiltonian.compute_average_energy(spin_config_without_pbc_sm, 1) == -4.122087557865234
     assert hamiltonian.compute_average_magnetization(spin_config_without_pbc_sm, 1) == 1.943692764174632
     assert hamiltonian.compute_heat_capacity(spin_config_without_pbc_sm, 1) == 0.38131320356151477
