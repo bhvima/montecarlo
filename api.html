@@ -199,12 +199,52 @@
 
 <dl class="method">
 <dt>
+<code class="sig-name descname">compute_average_energy_fast</code><span class="sig-paren">(</span><em class="sig-param">nsites</em>, <em class="sig-param">T</em>, <em class="sig-param">power=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/montecarlo/ising_hamiltonian.html#IsingHamiltonian.compute_average_energy_fast"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Compute Average Energy exactly (fast) (pbc)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nsites</strong> (<em>int</em>) – number of sites</p></li>
+<li><p><strong>T</strong> (<em>int</em>) – Temperature</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>E</strong> – Energy</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
 <code class="sig-name descname">compute_average_magnetization</code><span class="sig-paren">(</span><em class="sig-param">conf</em>, <em class="sig-param">T</em>, <em class="sig-param">power=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/montecarlo/ising_hamiltonian.html#IsingHamiltonian.compute_average_magnetization"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Compute Average Magnetization exactly</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>conf</strong> (<a class="reference internal" href="autosummary/montecarlo.SpinConfig.html#montecarlo.SpinConfig" title="montecarlo.SpinConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpinConfig</span></code></a>) – input configuration</p></li>
+<li><p><strong>T</strong> (<em>int</em>) – Temperature</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>M</strong> – Magnetization</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">compute_average_magnetization_fast</code><span class="sig-paren">(</span><em class="sig-param">nsites</em>, <em class="sig-param">T</em>, <em class="sig-param">power=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/montecarlo/ising_hamiltonian.html#IsingHamiltonian.compute_average_magnetization_fast"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Compute Average Magnetization exactly (fast) (pbc)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nsites</strong> (<em>int</em>) – number of sites</p></li>
 <li><p><strong>T</strong> (<em>int</em>) – Temperature</p></li>
 </ul>
 </dd>
@@ -239,12 +279,52 @@
 
 <dl class="method">
 <dt>
+<code class="sig-name descname">compute_heat_capacity_fast</code><span class="sig-paren">(</span><em class="sig-param">nsites</em>, <em class="sig-param">T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/montecarlo/ising_hamiltonian.html#IsingHamiltonian.compute_heat_capacity_fast"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Compute Heat Capacity exactly (fast) (pbc)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nsites</strong> (<em>int</em>) – number of sites</p></li>
+<li><p><strong>T</strong> (<em>int</em>) – Temperature</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>HC</strong> – Heat Capacity</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
 <code class="sig-name descname">compute_magnetic_susceptibility</code><span class="sig-paren">(</span><em class="sig-param">conf</em>, <em class="sig-param">T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/montecarlo/ising_hamiltonian.html#IsingHamiltonian.compute_magnetic_susceptibility"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Compute Magnetic Susceptibility exactly</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>conf</strong> (<a class="reference internal" href="autosummary/montecarlo.SpinConfig.html#montecarlo.SpinConfig" title="montecarlo.SpinConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpinConfig</span></code></a>) – input configuration</p></li>
+<li><p><strong>T</strong> (<em>int</em>) – Temperature</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>MS</strong> – Magnetic Susceptability</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">compute_magnetic_susceptibility_fast</code><span class="sig-paren">(</span><em class="sig-param">nsites</em>, <em class="sig-param">T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/montecarlo/ising_hamiltonian.html#IsingHamiltonian.compute_magnetic_susceptibility_fast"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Compute Magnetic Susceptibility exactly (fast) (pbc)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>nsites</strong> (<em>int</em>) – number of sites</p></li>
 <li><p><strong>T</strong> (<em>int</em>) – Temperature</p></li>
 </ul>
 </dd>
