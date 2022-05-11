@@ -248,12 +248,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_average_energy</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_average_energy</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">T</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span></div>
 
-<div class="viewcode-block" id="IsingHamiltonian.compute_heat_capacity_fast"><a class="viewcode-back" href="../../api.html#montecarlo.IsingHamiltonian.compute_heat_capacity_fast">[docs]</a>    <span class="k">def</span> <span class="nf">compute_heat_capacity_fast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nsites</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+<div class="viewcode-block" id="IsingHamiltonian.compute_heat_capacity_fast"><a class="viewcode-back" href="../../api.html#montecarlo.IsingHamiltonian.compute_heat_capacity_fast">[docs]</a>    <span class="k">def</span> <span class="nf">compute_heat_capacity_fast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Compute Heat Capacity exactly (fast) (pbc)</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        nsites   : int</span>
+<span class="sd">        n      : int</span>
 <span class="sd">            number of sites</span>
 <span class="sd">        T      : int</span>
 <span class="sd">            Temperature</span>
@@ -263,7 +263,7 @@
 <span class="sd">        HC : float</span>
 <span class="sd">            Heat Capacity</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_average_energy_fast</span><span class="p">(</span><span class="n">nsites</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_average_energy_fast</span><span class="p">(</span><span class="n">nsites</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">T</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_average_energy_fast</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_average_energy_fast</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="p">(</span><span class="n">T</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="IsingHamiltonian.compute_magnetic_susceptibility"><a class="viewcode-back" href="../../api.html#montecarlo.IsingHamiltonian.compute_magnetic_susceptibility">[docs]</a>    <span class="k">def</span> <span class="nf">compute_magnetic_susceptibility</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Compute Magnetic Susceptibility exactly</span>
@@ -282,12 +282,12 @@
 <span class="sd">        &quot;&quot;&quot;</span>
         <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_average_magnetization</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_average_magnetization</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="n">T</span></div>
 
-<div class="viewcode-block" id="IsingHamiltonian.compute_magnetic_susceptibility_fast"><a class="viewcode-back" href="../../api.html#montecarlo.IsingHamiltonian.compute_magnetic_susceptibility_fast">[docs]</a>    <span class="k">def</span> <span class="nf">compute_magnetic_susceptibility_fast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nsites</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+<div class="viewcode-block" id="IsingHamiltonian.compute_magnetic_susceptibility_fast"><a class="viewcode-back" href="../../api.html#montecarlo.IsingHamiltonian.compute_magnetic_susceptibility_fast">[docs]</a>    <span class="k">def</span> <span class="nf">compute_magnetic_susceptibility_fast</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Compute Magnetic Susceptibility exactly (fast) (pbc)</span>
 
 <span class="sd">        Parameters</span>
 <span class="sd">        ----------</span>
-<span class="sd">        nsites   : int</span>
+<span class="sd">        n      : int</span>
 <span class="sd">            number of sites</span>
 <span class="sd">        T      : int</span>
 <span class="sd">            Temperature</span>
@@ -297,7 +297,7 @@
 <span class="sd">        MS : float</span>
 <span class="sd">            Magnetic Susceptability</span>
 <span class="sd">        &quot;&quot;&quot;</span>
-        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_average_magnetization_fast</span><span class="p">(</span><span class="n">nsites</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_average_magnetization_fast</span><span class="p">(</span><span class="n">nsites</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="n">T</span></div>
+        <span class="k">return</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_average_magnetization_fast</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">power</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">compute_average_magnetization_fast</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span> <span class="o">/</span> <span class="n">T</span></div>
 
 <div class="viewcode-block" id="IsingHamiltonian.metropolis_sweep"><a class="viewcode-back" href="../../api.html#montecarlo.IsingHamiltonian.metropolis_sweep">[docs]</a>    <span class="k">def</span> <span class="nf">metropolis_sweep</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">conf</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Perform a single sweep through all the sites and return updated configuration (pbc)</span>
@@ -324,9 +324,26 @@
 
         <span class="k">return</span> <span class="n">conf</span></div>
 
-    <span class="k">def</span> <span class="nf">compute_average_energy_metropolis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nsites</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nsweep</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nburn</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<div class="viewcode-block" id="IsingHamiltonian.compute_average_energy_metropolis"><a class="viewcode-back" href="../../api.html#montecarlo.IsingHamiltonian.compute_average_energy_metropolis">[docs]</a>    <span class="k">def</span> <span class="nf">compute_average_energy_metropolis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">nsweep</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nburn</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Compute Average Energy approximate (pbc)</span>
 
-        <span class="n">conf_str</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;+&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">nsites</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">nsites</span> <span class="o">-</span> <span class="n">nsites</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n      : int</span>
+<span class="sd">            number of sites</span>
+<span class="sd">        T      : int</span>
+<span class="sd">            Temperature</span>
+<span class="sd">        nsweep : int</span>
+<span class="sd">            monte carlo steps</span>
+<span class="sd">        nburn  : int</span>
+<span class="sd">            burn steps</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        E  : float </span>
+<span class="sd">            Energy</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">conf_str</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;+&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">conf_str</span><span class="p">)</span>
         <span class="n">conf</span> <span class="o">=</span> <span class="n">SpinConfig</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf_str</span><span class="p">))</span>
 
@@ -341,11 +358,28 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">metropolis_sweep</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>
             <span class="n">E</span> <span class="o">=</span> <span class="p">(</span><span class="n">E</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="n">conf</span><span class="p">))</span><span class="o">/</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">E</span>
+        <span class="k">return</span> <span class="n">E</span></div>
 
-    <span class="k">def</span> <span class="nf">compute_average_magnetization_metropolis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nsites</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nsweep</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nburn</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<div class="viewcode-block" id="IsingHamiltonian.compute_average_magnetization_metropolis"><a class="viewcode-back" href="../../api.html#montecarlo.IsingHamiltonian.compute_average_magnetization_metropolis">[docs]</a>    <span class="k">def</span> <span class="nf">compute_average_magnetization_metropolis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">nsweep</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nburn</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Compute Average Magnetization approximate (pbc)</span>
 
-        <span class="n">conf_str</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;+&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">nsites</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">nsites</span> <span class="o">-</span> <span class="n">nsites</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n      : int</span>
+<span class="sd">            number of sites</span>
+<span class="sd">        T      : int</span>
+<span class="sd">            Temperature</span>
+<span class="sd">        nsweep : int</span>
+<span class="sd">            monte carlo steps</span>
+<span class="sd">        nburn  : int</span>
+<span class="sd">            burn steps</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        M  : float</span>
+<span class="sd">            Magnetization</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">conf_str</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;+&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">conf_str</span><span class="p">)</span>
         <span class="n">conf</span> <span class="o">=</span> <span class="n">SpinConfig</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf_str</span><span class="p">))</span>
 
@@ -360,11 +394,28 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">metropolis_sweep</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>
             <span class="n">M</span> <span class="o">=</span> <span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="n">conf</span><span class="o">.</span><span class="n">magnetization</span><span class="p">())</span><span class="o">/</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">M</span>
+        <span class="k">return</span> <span class="n">M</span></div>
 
-    <span class="k">def</span> <span class="nf">compute_heat_capacity_metropolis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nsites</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nsweep</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nburn</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<div class="viewcode-block" id="IsingHamiltonian.compute_heat_capacity_metropolis"><a class="viewcode-back" href="../../api.html#montecarlo.IsingHamiltonian.compute_heat_capacity_metropolis">[docs]</a>    <span class="k">def</span> <span class="nf">compute_heat_capacity_metropolis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">nsweep</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nburn</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Compute Heat Capacity approximate (pbc)</span>
 
-        <span class="n">conf_str</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;+&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">nsites</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">nsites</span> <span class="o">-</span> <span class="n">nsites</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n      : int</span>
+<span class="sd">            number of sites</span>
+<span class="sd">        T      : int</span>
+<span class="sd">            Temperature</span>
+<span class="sd">        nsweep : int</span>
+<span class="sd">            monte carlo steps</span>
+<span class="sd">        nburn  : int</span>
+<span class="sd">            burn steps</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        HC : float</span>
+<span class="sd">            Heat Capacity</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">conf_str</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;+&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">conf_str</span><span class="p">)</span>
         <span class="n">conf</span> <span class="o">=</span> <span class="n">SpinConfig</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf_str</span><span class="p">))</span>
 
@@ -382,11 +433,28 @@
             <span class="n">E</span> <span class="o">=</span> <span class="p">(</span><span class="n">E</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="n">Ei</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
             <span class="n">HC</span> <span class="o">=</span> <span class="p">(</span><span class="n">HC</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="n">Ei</span><span class="o">*</span><span class="n">Ei</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">HC</span>
+        <span class="k">return</span> <span class="n">HC</span></div>
 
-    <span class="k">def</span> <span class="nf">compute_magnetic_susceptibility_metropolis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">nsites</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">nsweep</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nburn</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<div class="viewcode-block" id="IsingHamiltonian.compute_magnetic_susceptibility_metropolis"><a class="viewcode-back" href="../../api.html#montecarlo.IsingHamiltonian.compute_magnetic_susceptibility_metropolis">[docs]</a>    <span class="k">def</span> <span class="nf">compute_magnetic_susceptibility_metropolis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">nsweep</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nburn</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot; Compute Magnetic Susceptibility approximate (pbc)</span>
 
-        <span class="n">conf_str</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;+&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">nsites</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">nsites</span> <span class="o">-</span> <span class="n">nsites</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        n      : int</span>
+<span class="sd">            number of sites</span>
+<span class="sd">        T      : int</span>
+<span class="sd">            Temperature</span>
+<span class="sd">        nsweep : int</span>
+<span class="sd">            monte carlo steps</span>
+<span class="sd">        nburn  : int</span>
+<span class="sd">            burn steps</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        MS : float</span>
+<span class="sd">            Magnetic Susceptibility</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">conf_str</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;+&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">&quot;-&quot;</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">n</span><span class="o">//</span><span class="mi">2</span><span class="p">)</span>
         <span class="n">random</span><span class="o">.</span><span class="n">shuffle</span><span class="p">(</span><span class="n">conf_str</span><span class="p">)</span>
         <span class="n">conf</span> <span class="o">=</span> <span class="n">SpinConfig</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">conf_str</span><span class="p">))</span>
 
@@ -404,7 +472,7 @@
             <span class="n">M</span> <span class="o">=</span> <span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="n">Mi</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
             <span class="n">MS</span> <span class="o">=</span> <span class="p">(</span><span class="n">MS</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="n">Mi</span><span class="o">*</span><span class="n">Mi</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">MS</span></div>
+        <span class="k">return</span> <span class="n">MS</span></div></div>
 </pre></div>
 
            </div>
