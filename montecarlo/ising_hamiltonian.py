@@ -251,7 +251,7 @@ class IsingHamiltonian:
         for i, v in enumerate(conf):
             delta_e = ((-2 * v * self.mu) + (-2 * v * (conf[(i - 1) % N] + conf[(i + 1) % N])))/self.k
 
-            if delta_e <= 0 or random.random() <= np.exp(-delta_e/(T)):
+            if delta_e <= 0 or random.random() <= np.exp(-delta_e/T):
                 conf[i] = -v
 
         return conf
@@ -265,9 +265,9 @@ class IsingHamiltonian:
             number of sites
         T      : int
             Temperature
-        nsweep : int
+        nsweep : int, default: 1000
             monte carlo steps
-        nburn  : int
+        nburn  : int, default: 100
             burn steps
         
         Returns
@@ -301,9 +301,9 @@ class IsingHamiltonian:
             number of sites
         T      : int
             Temperature
-        nsweep : int
+        nsweep : int, default: 1000
             monte carlo steps
-        nburn  : int
+        nburn  : int, default: 100
             burn steps
 
         Returns
@@ -337,9 +337,9 @@ class IsingHamiltonian:
             number of sites
         T      : int
             Temperature
-        nsweep : int
+        nsweep : int, default: 1000
             monte carlo steps
-        nburn  : int
+        nburn  : int, default: 100
             burn steps
         
         Returns
@@ -357,15 +357,15 @@ class IsingHamiltonian:
         self.metropolis_sweep(conf, T=T)
 
         E = self.energy(conf)
-        HC = E * E
+        EE = E * E
 
         for i in range(1,nsweep):
             self.metropolis_sweep(conf, T=T)
             Ei = self.energy(conf)
             E = (E * i + Ei)/(i + 1)
-            HC = (HC * i + Ei*Ei)/(i + 1)
+            EE = (EE * i + Ei*Ei)/(i + 1)
 
-        return HC
+        return (EE-E*E)/(T*T)
 
     def compute_magnetic_susceptibility_metropolis(self, n, T, nsweep=1000, nburn=100):
         """ Compute Magnetic Susceptibility approximate (pbc)
@@ -376,9 +376,9 @@ class IsingHamiltonian:
             number of sites
         T      : int
             Temperature
-        nsweep : int
+        nsweep : int, default: 1000
             monte carlo steps
-        nburn  : int
+        nburn  : int, default: 100
             burn steps
         
         Returns
@@ -396,12 +396,12 @@ class IsingHamiltonian:
         self.metropolis_sweep(conf, T=T)
 
         M = conf.magnetization()
-        MS = M * M
+        MM = M * M
 
         for i in range(1,nsweep):
             self.metropolis_sweep(conf, T=T)
             Mi = conf.magnetization()
             M = (M * i + Mi)/(i + 1)
-            MS = (MS * i + Mi*Mi)/(i + 1)
+            MM = (MM * i + Mi*Mi)/(i + 1)
 
-        return MS
+        return (MM-M*M)/T

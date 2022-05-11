@@ -84,5 +84,5 @@ def test_IsingHamiltonian(hamiltonian, spin_config_sm, spin_config_without_pbc_s
     random.seed(3)
     assert hamiltonian.compute_average_energy_metropolis(10, 1) == -30.705599999999983
     assert hamiltonian.compute_average_magnetization_metropolis(10, 1) == 9.945999999999993
-    assert hamiltonian.compute_heat_capacity_metropolis(10, 1) == 946.9159200000003
-    assert hamiltonian.compute_magnetic_susceptibility_metropolis(10, 1) == 99.316
+    assert hamiltonian.compute_heat_capacity_metropolis(10, 1) == 2.8288440000011406
+    assert hamiltonian.compute_magnetic_susceptibility_metropolis(10, 1) == 0.07455599999983065
