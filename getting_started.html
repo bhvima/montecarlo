@@ -96,6 +96,7 @@
 </div>
 <div class="section" id="plot-of-observables-vs-t">
 <h2>Plot of observables vs T<a class="headerlink" href="#plot-of-observables-vs-t" title="Permalink to this headline">¶</a></h2>
+<p>The following is produced using the exact computation (fast version):</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">montecarlo</span> <span class="kn">import</span> <span class="n">IsingHamiltonian</span> <span class="k">as</span> <span class="n">Hamiltonian</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -120,6 +121,39 @@
 </div>
 <p>This should produce the following plot:</p>
 <a class="reference internal image-reference" href="_images/plot1.png"><img alt="Observables vs Temperature (30 sites)" src="_images/plot1.png" style="width: 400px;" /></a>
+<p>The following is produced using the appoximate computation using metropolis sampling:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">montecarlo</span> <span class="kn">import</span> <span class="n">IsingHamiltonian</span> <span class="k">as</span> <span class="n">Hamiltonian</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">random</span>
+
+<span class="n">H</span> <span class="o">=</span> <span class="n">Hamiltonian</span><span class="p">(</span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">J</span><span class="o">=-</span><span class="mi">2</span><span class="p">,</span> <span class="n">mu</span><span class="o">=</span><span class="mf">1.1</span><span class="p">)</span>
+
+<span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">AE</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">AM</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">HC</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">MS</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">T</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">100</span><span class="p">):</span>
+    <span class="n">T</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="o">.</span><span class="mi">1</span><span class="o">*</span><span class="n">i</span><span class="p">)</span>
+    <span class="n">AE</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">compute_average_energy_metropolis</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">AM</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">compute_average_magnetization_metropolis</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">HC</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">compute_heat_capacity_metropolis</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">nsweep</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span> <span class="n">nburn</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+    <span class="n">MS</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">H</span><span class="o">.</span><span class="n">compute_magnetic_susceptibility_metropolis</span><span class="p">(</span><span class="mi">30</span><span class="p">,</span> <span class="n">t</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">nsweep</span><span class="o">=</span><span class="mi">4000</span><span class="p">,</span> <span class="n">nburn</span><span class="o">=</span><span class="mi">1000</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">AE</span><span class="p">,</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Average Energy&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">AM</span><span class="p">,</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Average Magnetization&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">HC</span><span class="p">,</span><span class="s1">&#39;g&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Heat Capacity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span><span class="n">MS</span><span class="p">,</span><span class="s1">&#39;y&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Magnetic Susceptibility&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This should produce the following plot:</p>
+<a class="reference internal image-reference" href="_images/plot2.png"><img alt="Observables vs Temperature (30 sites)" src="_images/plot2.png" style="width: 400px;" /></a>
 </div>
 </div>
 

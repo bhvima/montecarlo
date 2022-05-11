@@ -319,7 +319,7 @@
         <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">conf</span><span class="p">):</span>
             <span class="n">delta_e</span> <span class="o">=</span> <span class="p">((</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">v</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">mu</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="o">-</span><span class="mi">2</span> <span class="o">*</span> <span class="n">v</span> <span class="o">*</span> <span class="p">(</span><span class="n">conf</span><span class="p">[(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">N</span><span class="p">]</span> <span class="o">+</span> <span class="n">conf</span><span class="p">[(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="n">N</span><span class="p">])))</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">k</span>
 
-            <span class="k">if</span> <span class="n">delta_e</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">delta_e</span><span class="o">/</span><span class="p">(</span><span class="n">T</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">delta_e</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">delta_e</span><span class="o">/</span><span class="n">T</span><span class="p">):</span>
                 <span class="n">conf</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="n">v</span>
 
         <span class="k">return</span> <span class="n">conf</span></div>
@@ -333,9 +333,9 @@
 <span class="sd">            number of sites</span>
 <span class="sd">        T      : int</span>
 <span class="sd">            Temperature</span>
-<span class="sd">        nsweep : int</span>
+<span class="sd">        nsweep : int, default: 1000</span>
 <span class="sd">            monte carlo steps</span>
-<span class="sd">        nburn  : int</span>
+<span class="sd">        nburn  : int, default: 100</span>
 <span class="sd">            burn steps</span>
 <span class="sd">        </span>
 <span class="sd">        Returns</span>
@@ -369,9 +369,9 @@
 <span class="sd">            number of sites</span>
 <span class="sd">        T      : int</span>
 <span class="sd">            Temperature</span>
-<span class="sd">        nsweep : int</span>
+<span class="sd">        nsweep : int, default: 1000</span>
 <span class="sd">            monte carlo steps</span>
-<span class="sd">        nburn  : int</span>
+<span class="sd">        nburn  : int, default: 100</span>
 <span class="sd">            burn steps</span>
 
 <span class="sd">        Returns</span>
@@ -405,9 +405,9 @@
 <span class="sd">            number of sites</span>
 <span class="sd">        T      : int</span>
 <span class="sd">            Temperature</span>
-<span class="sd">        nsweep : int</span>
+<span class="sd">        nsweep : int, default: 1000</span>
 <span class="sd">            monte carlo steps</span>
-<span class="sd">        nburn  : int</span>
+<span class="sd">        nburn  : int, default: 100</span>
 <span class="sd">            burn steps</span>
 <span class="sd">        </span>
 <span class="sd">        Returns</span>
@@ -425,15 +425,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">metropolis_sweep</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>
 
         <span class="n">E</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
-        <span class="n">HC</span> <span class="o">=</span> <span class="n">E</span> <span class="o">*</span> <span class="n">E</span>
+        <span class="n">EE</span> <span class="o">=</span> <span class="n">E</span> <span class="o">*</span> <span class="n">E</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">nsweep</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">metropolis_sweep</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>
             <span class="n">Ei</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">energy</span><span class="p">(</span><span class="n">conf</span><span class="p">)</span>
             <span class="n">E</span> <span class="o">=</span> <span class="p">(</span><span class="n">E</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="n">Ei</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">HC</span> <span class="o">=</span> <span class="p">(</span><span class="n">HC</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="n">Ei</span><span class="o">*</span><span class="n">Ei</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">EE</span> <span class="o">=</span> <span class="p">(</span><span class="n">EE</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="n">Ei</span><span class="o">*</span><span class="n">Ei</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">HC</span></div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">EE</span><span class="o">-</span><span class="n">E</span><span class="o">*</span><span class="n">E</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">T</span><span class="o">*</span><span class="n">T</span><span class="p">)</span></div>
 
 <div class="viewcode-block" id="IsingHamiltonian.compute_magnetic_susceptibility_metropolis"><a class="viewcode-back" href="../../api.html#montecarlo.IsingHamiltonian.compute_magnetic_susceptibility_metropolis">[docs]</a>    <span class="k">def</span> <span class="nf">compute_magnetic_susceptibility_metropolis</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">T</span><span class="p">,</span> <span class="n">nsweep</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">nburn</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot; Compute Magnetic Susceptibility approximate (pbc)</span>
@@ -444,9 +444,9 @@
 <span class="sd">            number of sites</span>
 <span class="sd">        T      : int</span>
 <span class="sd">            Temperature</span>
-<span class="sd">        nsweep : int</span>
+<span class="sd">        nsweep : int, default: 1000</span>
 <span class="sd">            monte carlo steps</span>
-<span class="sd">        nburn  : int</span>
+<span class="sd">        nburn  : int, default: 100</span>
 <span class="sd">            burn steps</span>
 <span class="sd">        </span>
 <span class="sd">        Returns</span>
@@ -464,15 +464,15 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">metropolis_sweep</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>
 
         <span class="n">M</span> <span class="o">=</span> <span class="n">conf</span><span class="o">.</span><span class="n">magnetization</span><span class="p">()</span>
-        <span class="n">MS</span> <span class="o">=</span> <span class="n">M</span> <span class="o">*</span> <span class="n">M</span>
+        <span class="n">MM</span> <span class="o">=</span> <span class="n">M</span> <span class="o">*</span> <span class="n">M</span>
 
         <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="n">nsweep</span><span class="p">):</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">metropolis_sweep</span><span class="p">(</span><span class="n">conf</span><span class="p">,</span> <span class="n">T</span><span class="o">=</span><span class="n">T</span><span class="p">)</span>
             <span class="n">Mi</span> <span class="o">=</span> <span class="n">conf</span><span class="o">.</span><span class="n">magnetization</span><span class="p">()</span>
             <span class="n">M</span> <span class="o">=</span> <span class="p">(</span><span class="n">M</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="n">Mi</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-            <span class="n">MS</span> <span class="o">=</span> <span class="p">(</span><span class="n">MS</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="n">Mi</span><span class="o">*</span><span class="n">Mi</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">MM</span> <span class="o">=</span> <span class="p">(</span><span class="n">MM</span> <span class="o">*</span> <span class="n">i</span> <span class="o">+</span> <span class="n">Mi</span><span class="o">*</span><span class="n">Mi</span><span class="p">)</span><span class="o">/</span><span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
 
-        <span class="k">return</span> <span class="n">MS</span></div></div>
+        <span class="k">return</span> <span class="p">(</span><span class="n">MM</span><span class="o">-</span><span class="n">M</span><span class="o">*</span><span class="n">M</span><span class="p">)</span><span class="o">/</span><span class="n">T</span></div></div>
 </pre></div>
 
            </div>
