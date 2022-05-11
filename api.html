@@ -199,12 +199,12 @@
 
 <dl class="method">
 <dt>
-<code class="sig-name descname">compute_average_energy_fast</code><span class="sig-paren">(</span><em class="sig-param">nsites</em>, <em class="sig-param">T</em>, <em class="sig-param">power=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/montecarlo/ising_hamiltonian.html#IsingHamiltonian.compute_average_energy_fast"><span class="viewcode-link">[source]</span></a></dt>
+<code class="sig-name descname">compute_average_energy_fast</code><span class="sig-paren">(</span><em class="sig-param">n</em>, <em class="sig-param">T</em>, <em class="sig-param">power=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/montecarlo/ising_hamiltonian.html#IsingHamiltonian.compute_average_energy_fast"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Compute Average Energy exactly (fast) (pbc)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>nsites</strong> (<em>int</em>) – number of sites</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – number of sites</p></li>
 <li><p><strong>T</strong> (<em>int</em>) – Temperature</p></li>
 </ul>
 </dd>
@@ -239,12 +239,12 @@
 
 <dl class="method">
 <dt>
-<code class="sig-name descname">compute_average_magnetization_fast</code><span class="sig-paren">(</span><em class="sig-param">nsites</em>, <em class="sig-param">T</em>, <em class="sig-param">power=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/montecarlo/ising_hamiltonian.html#IsingHamiltonian.compute_average_magnetization_fast"><span class="viewcode-link">[source]</span></a></dt>
+<code class="sig-name descname">compute_average_magnetization_fast</code><span class="sig-paren">(</span><em class="sig-param">n</em>, <em class="sig-param">T</em>, <em class="sig-param">power=1</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/montecarlo/ising_hamiltonian.html#IsingHamiltonian.compute_average_magnetization_fast"><span class="viewcode-link">[source]</span></a></dt>
 <dd><p>Compute Average Magnetization exactly (fast) (pbc)</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>nsites</strong> (<em>int</em>) – number of sites</p></li>
+<li><p><strong>n</strong> (<em>int</em>) – number of sites</p></li>
 <li><p><strong>T</strong> (<em>int</em>) – Temperature</p></li>
 </ul>
 </dd>
@@ -354,6 +354,26 @@
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt>
+<code class="sig-name descname">metropolis_sweep</code><span class="sig-paren">(</span><em class="sig-param">conf</em>, <em class="sig-param">T</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/montecarlo/ising_hamiltonian.html#IsingHamiltonian.metropolis_sweep"><span class="viewcode-link">[source]</span></a></dt>
+<dd><p>Perform a single sweep through all the sites and return updated configuration (pbc)
+:Parameters: * <strong>conf</strong> (<a class="reference internal" href="autosummary/montecarlo.SpinConfig.html#montecarlo.SpinConfig" title="montecarlo.SpinConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpinConfig</span></code></a>) – input configuration</p>
+<blockquote>
+<div><ul class="simple">
+<li><p><strong>T</strong> (<em>int</em>) – Temperature</p></li>
+</ul>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p><strong>conf</strong> – Returns updated config</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><a class="reference internal" href="autosummary/montecarlo.SpinConfig.html#montecarlo.SpinConfig" title="montecarlo.SpinConfig"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpinConfig</span></code></a></p>
 </dd>
 </dl>
 </dd></dl>
