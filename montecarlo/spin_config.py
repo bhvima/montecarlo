@@ -25,6 +25,9 @@ class SpinConfig:
     
     def __getitem__(self, item):
         return self.__spin_str[item]
+
+    def __setitem__(self, item, value):
+        self.__spin_str[item] = value
     
     def __len__(self):
         return len(self.__spin_str)

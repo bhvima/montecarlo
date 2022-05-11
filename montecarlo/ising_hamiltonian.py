@@ -1,4 +1,5 @@
 import numpy as np
+import random
 from math import comb
 from .spin_config import SpinConfig
 
@@ -49,6 +50,13 @@ class IsingHamiltonian:
     def __probability(self, config, T):
         return np.exp((-1/T) * self.energy(config))
 
+    @staticmethod
+    def N(n, r, k):
+        return (comb(n - r - 1, k - 1) * comb(r - 1, k - 1) * n)//k
+
+    def E(self, n, r, k):
+        return (-self.J * (n - 4 * k) + self.mu * (n - 2 * r))/self.k
+
     def compute_average_energy(self, conf, T, power=1):
         """ Compute Average Energy exactly
 
@@ -72,12 +80,12 @@ class IsingHamiltonian:
             denum += p
         return num/denum
 
-    def compute_average_energy_fast(self, nsites, T, power=1):
+    def compute_average_energy_fast(self, n, T, power=1):
         """ Compute Average Energy exactly (fast) (pbc)
 
         Parameters
         ----------
-        nsites   : int
+        n      : int
             number of sites
         T      : int
             Temperature
@@ -88,38 +96,18 @@ class IsingHamiltonian:
             Energy
         """
         num = denum = 0
-
-        n = 0
-        for config_sum in range(nsites, -1, -2):
-            bond_sum = nsites - 4
-            if n == 0:
-                energy_neg = (-self.J * nsites - self.mu * config_sum)/self.k
-                energy_pos = (-self.J * nsites + self.mu * config_sum)/self.k
-                p_pos = np.exp((-1/T) * energy_pos)
-                p_neg = np.exp((-1/T) * energy_neg)
-                num += (energy_pos ** power) * p_pos + (energy_neg ** power) * p_neg
-                denum += p_pos + p_neg
-            elif n == 1:
-                energy_pos = (-self.J * bond_sum + self.mu * config_sum)/self.k
-                energy_neg = (-self.J * bond_sum - self.mu * config_sum)/self.k
-                p_pos = (1 if nsites == 2 else nsites) * np.exp((-1/T) * energy_pos)
-                p_neg = (1 if nsites == 2 else nsites) * np.exp((-1/T) * energy_neg)
-                num += (energy_pos ** power) * p_pos + (energy_neg ** power) * p_neg
-                denum += p_pos + p_neg
-            else:
-                for i in range(1, n + 1):
-                    freq = (comb(nsites - n - 1, i - 1) * comb(n - 1, i - 1) * nsites)//i
-                    energy_pos = (-self.J * bond_sum + self.mu * config_sum)/self.k
-                    p_pos = freq * np.exp((-1/T) * energy_pos)
-                    num += (energy_pos ** power) * p_pos
-                    denum += p_pos
-                    if n != nsites//2 or nsites % 2 != 0:
-                        energy_neg = (-self.J * bond_sum - self.mu * config_sum)/self.k
-                        p_neg = freq * np.exp((-1/T) * energy_neg)
-                        num += (energy_neg ** power) * p_neg
-                        denum += p_neg
-                    bond_sum -= 4
-            n += 1
+        for r in range(n + 1):
+            if r == 0 or r == n:
+                energy = self.E(n, r, 0)
+                prob = np.exp(-energy/T)
+                num += (energy ** power) * prob
+                denum += prob
+            for k in range(1, min(r, n - r) + 1):
+                energy = self.E(n, r, k)
+                freq = self.N(n, r, k)
+                prob = np.exp(-energy/T)
+                num += freq * (energy ** power) * prob
+                denum += freq * prob
         return num/denum
 
     def compute_average_magnetization(self, conf, T, power=1):
@@ -145,12 +133,12 @@ class IsingHamiltonian:
             denum += p
         return num/denum
 
-    def compute_average_magnetization_fast(self, nsites, T, power=1):
+    def compute_average_magnetization_fast(self, n, T, power=1):
         """ Compute Average Magnetization exactly (fast) (pbc)
 
         Parameters
         ----------
-        nsites   : int
+        n      : int
             number of sites
         T      : int
             Temperature
@@ -161,38 +149,18 @@ class IsingHamiltonian:
             Magnetization
         """
         num = denum = 0
-
-        n = 0
-        for config_sum in range(nsites, -1, -2):
-            bond_sum = nsites - 4
-            if n == 0:
-                energy_neg = (-self.J * nsites - self.mu * config_sum)/self.k
-                energy_pos = (-self.J * nsites + self.mu * config_sum)/self.k
-                p_pos = np.exp((-1/T) * energy_pos)
-                p_neg = np.exp((-1/T) * energy_neg)
-                num += (config_sum ** power) * p_pos + ((-config_sum) ** power) * p_neg
-                denum += p_pos + p_neg
-            elif n == 1:
-                energy_pos = (-self.J * bond_sum + self.mu * config_sum)/self.k
-                energy_neg = (-self.J * bond_sum - self.mu * config_sum)/self.k
-                p_pos = (1 if nsites == 2 else nsites) * np.exp((-1/T) * energy_pos)
-                p_neg = (1 if nsites == 2 else nsites) * np.exp((-1/T) * energy_neg)
-                num += (config_sum ** power) * p_pos + ((-config_sum) ** power) * p_neg
-                denum += p_pos + p_neg
-            else:
-                for i in range(1, n + 1):
-                    freq = (comb(nsites - n - 1, i - 1) * comb(n - 1, i - 1) * nsites)//i
-                    energy_pos = (-self.J * bond_sum + self.mu * config_sum)/self.k
-                    p_pos = freq * np.exp((-1/T) * energy_pos)
-                    num += (config_sum ** power) * p_pos
-                    denum += p_pos
-                    if n != nsites//2 or nsites % 2 != 0:
-                        energy_neg = (-self.J * bond_sum - self.mu * config_sum)/self.k
-                        p_neg = freq * np.exp((-1/T) * energy_neg)
-                        num += ((-config_sum) ** power) * p_neg
-                        denum += p_neg
-                    bond_sum -= 4
-            n += 1
+        for r in range(n + 1):
+            if r == 0 or r == n:
+                energy = self.E(n, r, 0)
+                prob = np.exp(-energy/T)
+                num += ((n - 2 * r) ** power) * prob
+                denum += prob
+            for k in range(1, min(r, n - r) + 1):
+                energy = self.E(n, r, k)
+                freq = self.N(n, r, k)
+                prob = np.exp(-energy/T)
+                num += freq * ((n - 2 * r) ** power) * prob
+                denum += freq * prob
         return num/denum
 
     def compute_heat_capacity(self, conf, T):
@@ -262,3 +230,110 @@ class IsingHamiltonian:
             Magnetic Susceptability
         """
         return (self.compute_average_magnetization_fast(nsites, T, power=2) - (self.compute_average_magnetization_fast(nsites, T) ** 2)) / T
+
+    def metropolis_sweep(self, conf, T):
+        """Perform a single sweep through all the sites and return updated configuration (pbc)
+        Parameters
+        ----------
+        conf   : :class:`SpinConfig`
+            input configuration 
+        T      : int
+            Temperature
+        
+        Returns
+        -------
+        conf  : :class:`SpinConfig`
+            Returns updated config
+        """
+        assert(conf.pbc())
+        
+        N = len(conf)
+        for i, v in enumerate(conf):
+            delta_e = ((-2 * v * self.mu) + (-2 * v * (conf[(i - 1) % N] + conf[(i + 1) % N])))/self.k
+
+            if delta_e <= 0 or random.random() <= np.exp(-delta_e/(T)):
+                conf[i] = -v
+
+        return conf
+
+    def compute_average_energy_metropolis(self, nsites, T=1, nsweep=1000, nburn=100):
+
+        conf_str = ["+"] * (nsites//2) + ["-"] * (nsites - nsites//2)
+        random.shuffle(conf_str)
+        conf = SpinConfig(''.join(conf_str))
+
+        for _ in range(nburn):
+            self.metropolis_sweep(conf, T=T)
+
+        self.metropolis_sweep(conf, T=T)
+
+        E = self.energy(conf)
+
+        for i in range(1,nsweep):
+            self.metropolis_sweep(conf, T=T)
+            E = (E * i + self.energy(conf))/(i + 1)
+
+        return E
+
+    def compute_average_magnetization_metropolis(self, nsites, T=1, nsweep=1000, nburn=100):
+
+        conf_str = ["+"] * (nsites//2) + ["-"] * (nsites - nsites//2)
+        random.shuffle(conf_str)
+        conf = SpinConfig(''.join(conf_str))
+
+        for _ in range(nburn):
+            self.metropolis_sweep(conf, T=T)
+
+        self.metropolis_sweep(conf, T=T)
+
+        M = conf.magnetization()
+
+        for i in range(1,nsweep):
+            self.metropolis_sweep(conf, T=T)
+            M = (M * i + conf.magnetization())/(i + 1)
+
+        return M
+
+    def compute_heat_capacity_metropolis(self, nsites, T=1, nsweep=1000, nburn=100):
+
+        conf_str = ["+"] * (nsites//2) + ["-"] * (nsites - nsites//2)
+        random.shuffle(conf_str)
+        conf = SpinConfig(''.join(conf_str))
+
+        for _ in range(nburn):
+            self.metropolis_sweep(conf, T=T)
+
+        self.metropolis_sweep(conf, T=T)
+
+        E = self.energy(conf)
+        HC = E * E
+
+        for i in range(1,nsweep):
+            self.metropolis_sweep(conf, T=T)
+            Ei = self.energy(conf)
+            E = (E * i + Ei)/(i + 1)
+            HC = (HC * i + Ei*Ei)/(i + 1)
+
+        return HC
+
+    def compute_magnetic_susceptibility_metropolis(self, nsites, T=1, nsweep=1000, nburn=100):
+
+        conf_str = ["+"] * (nsites//2) + ["-"] * (nsites - nsites//2)
+        random.shuffle(conf_str)
+        conf = SpinConfig(''.join(conf_str))
+
+        for _ in range(nburn):
+            self.metropolis_sweep(conf, T=T)
+
+        self.metropolis_sweep(conf, T=T)
+
+        M = conf.magnetization()
+        MS = M * M
+
+        for i in range(1,nsweep):
+            self.metropolis_sweep(conf, T=T)
+            Mi = conf.magnetization()
+            M = (M * i + Mi)/(i + 1)
+            MS = (MS * i + Mi*Mi)/(i + 1)
+
+        return MS

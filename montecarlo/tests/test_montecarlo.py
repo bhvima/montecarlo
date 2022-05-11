@@ -5,6 +5,7 @@ Unit and regression test for the montecarlo package.
 import sys
 
 import pytest
+import random
 from montecarlo import *
 
 def test_montecarlo_imported():
@@ -68,7 +69,7 @@ def test_IsingHamiltonian(hamiltonian, spin_config_sm, spin_config_without_pbc_s
     assert hamiltonian.compute_average_energy_fast(10, 1) == -30.99562217946881
     assert hamiltonian.compute_average_magnetization_fast(10, 1) == 9.999059904921909
     assert hamiltonian.compute_heat_capacity_fast(10, 1) == 0.046131068738759495
-    assert hamiltonian.compute_magnetic_susceptibility_fast(10, 1) == 0.0023485385990227314
+    assert hamiltonian.compute_magnetic_susceptibility_fast(10, 1) == 0.0023485385990369423
 
     assert hamiltonian.compute_average_energy_fast(11, 1) == -34.095184403383776
     assert hamiltonian.compute_average_magnetization_fast(11, 1) == 10.998965900847892
@@ -79,3 +80,9 @@ def test_IsingHamiltonian(hamiltonian, spin_config_sm, spin_config_without_pbc_s
     assert hamiltonian.compute_average_magnetization(spin_config_without_pbc_sm, 1) == 1.943692764174632
     assert hamiltonian.compute_heat_capacity(spin_config_without_pbc_sm, 1) == 0.38131320356151477
     assert hamiltonian.compute_magnetic_susceptibility(spin_config_without_pbc_sm, 1) == 0.2060839557683165
+
+    random.seed(3)
+    assert hamiltonian.compute_average_energy_metropolis(10) == -30.705599999999983
+    assert hamiltonian.compute_average_magnetization_metropolis(10) == 9.945999999999993
+    assert hamiltonian.compute_heat_capacity_metropolis(10) == 946.9159200000003
+    assert hamiltonian.compute_magnetic_susceptibility_metropolis(10) == 99.316
