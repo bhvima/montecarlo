@@ -180,12 +180,12 @@ class IsingHamiltonian:
         """
         return (self.compute_average_energy(conf, T, power=2) - (self.compute_average_energy(conf, T) ** 2)) / (T ** 2)
 
-    def compute_heat_capacity_fast(self, nsites, T):
+    def compute_heat_capacity_fast(self, n, T):
         """ Compute Heat Capacity exactly (fast) (pbc)
 
         Parameters
         ----------
-        nsites   : int
+        n      : int
             number of sites
         T      : int
             Temperature
@@ -195,7 +195,7 @@ class IsingHamiltonian:
         HC : float
             Heat Capacity
         """
-        return (self.compute_average_energy_fast(nsites, T, power=2) - (self.compute_average_energy_fast(nsites, T) ** 2)) / (T ** 2)
+        return (self.compute_average_energy_fast(n, T, power=2) - (self.compute_average_energy_fast(n, T) ** 2)) / (T ** 2)
 
     def compute_magnetic_susceptibility(self, conf, T):
         """ Compute Magnetic Susceptibility exactly
@@ -214,12 +214,12 @@ class IsingHamiltonian:
         """
         return (self.compute_average_magnetization(conf, T, power=2) - (self.compute_average_magnetization(conf, T) ** 2)) / T
 
-    def compute_magnetic_susceptibility_fast(self, nsites, T):
+    def compute_magnetic_susceptibility_fast(self, n, T):
         """ Compute Magnetic Susceptibility exactly (fast) (pbc)
 
         Parameters
         ----------
-        nsites   : int
+        n      : int
             number of sites
         T      : int
             Temperature
@@ -229,7 +229,7 @@ class IsingHamiltonian:
         MS : float
             Magnetic Susceptability
         """
-        return (self.compute_average_magnetization_fast(nsites, T, power=2) - (self.compute_average_magnetization_fast(nsites, T) ** 2)) / T
+        return (self.compute_average_magnetization_fast(n, T, power=2) - (self.compute_average_magnetization_fast(n, T) ** 2)) / T
 
     def metropolis_sweep(self, conf, T):
         """Perform a single sweep through all the sites and return updated configuration (pbc)
@@ -256,9 +256,26 @@ class IsingHamiltonian:
 
         return conf
 
-    def compute_average_energy_metropolis(self, nsites, T=1, nsweep=1000, nburn=100):
+    def compute_average_energy_metropolis(self, n, T, nsweep=1000, nburn=100):
+        """ Compute Average Energy approximate (pbc)
 
-        conf_str = ["+"] * (nsites//2) + ["-"] * (nsites - nsites//2)
+        Parameters
+        ----------
+        n      : int
+            number of sites
+        T      : int
+            Temperature
+        nsweep : int
+            monte carlo steps
+        nburn  : int
+            burn steps
+        
+        Returns
+        -------
+        E  : float 
+            Energy
+        """
+        conf_str = ["+"] * (n//2) + ["-"] * (n - n//2)
         random.shuffle(conf_str)
         conf = SpinConfig(''.join(conf_str))
 
@@ -275,9 +292,26 @@ class IsingHamiltonian:
 
         return E
 
-    def compute_average_magnetization_metropolis(self, nsites, T=1, nsweep=1000, nburn=100):
+    def compute_average_magnetization_metropolis(self, n, T, nsweep=1000, nburn=100):
+        """ Compute Average Magnetization approximate (pbc)
 
-        conf_str = ["+"] * (nsites//2) + ["-"] * (nsites - nsites//2)
+        Parameters
+        ----------
+        n      : int
+            number of sites
+        T      : int
+            Temperature
+        nsweep : int
+            monte carlo steps
+        nburn  : int
+            burn steps
+
+        Returns
+        -------
+        M  : float
+            Magnetization
+        """
+        conf_str = ["+"] * (n//2) + ["-"] * (n - n//2)
         random.shuffle(conf_str)
         conf = SpinConfig(''.join(conf_str))
 
@@ -294,9 +328,26 @@ class IsingHamiltonian:
 
         return M
 
-    def compute_heat_capacity_metropolis(self, nsites, T=1, nsweep=1000, nburn=100):
+    def compute_heat_capacity_metropolis(self, n, T, nsweep=1000, nburn=100):
+        """ Compute Heat Capacity approximate (pbc)
 
-        conf_str = ["+"] * (nsites//2) + ["-"] * (nsites - nsites//2)
+        Parameters
+        ----------
+        n      : int
+            number of sites
+        T      : int
+            Temperature
+        nsweep : int
+            monte carlo steps
+        nburn  : int
+            burn steps
+        
+        Returns
+        -------
+        HC : float
+            Heat Capacity
+        """
+        conf_str = ["+"] * (n//2) + ["-"] * (n - n//2)
         random.shuffle(conf_str)
         conf = SpinConfig(''.join(conf_str))
 
@@ -316,9 +367,26 @@ class IsingHamiltonian:
 
         return HC
 
-    def compute_magnetic_susceptibility_metropolis(self, nsites, T=1, nsweep=1000, nburn=100):
+    def compute_magnetic_susceptibility_metropolis(self, n, T, nsweep=1000, nburn=100):
+        """ Compute Magnetic Susceptibility approximate (pbc)
 
-        conf_str = ["+"] * (nsites//2) + ["-"] * (nsites - nsites//2)
+        Parameters
+        ----------
+        n      : int
+            number of sites
+        T      : int
+            Temperature
+        nsweep : int
+            monte carlo steps
+        nburn  : int
+            burn steps
+        
+        Returns
+        -------
+        MS : float
+            Magnetic Susceptibility
+        """
+        conf_str = ["+"] * (n//2) + ["-"] * (n - n//2)
         random.shuffle(conf_str)
         conf = SpinConfig(''.join(conf_str))
 
